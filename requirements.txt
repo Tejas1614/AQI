@@ -2,7 +2,4 @@ streamlit
 pandas
 plotly
 streamlit-autorefresh
-rich
-markdown-it-py
-mdurl
-pygments
+random
