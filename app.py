@@ -4,6 +4,8 @@ import plotly.graph_objects as go
 import plotly.express as px
 import random
 from streamlit_autorefresh import st_autorefresh
+import os
+os.environ["STREAMLIT_WATCHDOG"] = "false"
 
 # -----------------------------
 # Helper functions
