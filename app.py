@@ -42,7 +42,7 @@ location = st.sidebar.text_input("Location", "Delhi")
 
 if "live_update" not in st.session_state:
     st.session_state.live_update = True
-toggle = st.sidebar.checkbox("Live Updates (10 sec)", value=st.session_state.live_update)
+toggle = st.sidebar.checkbox("Live Updates (1 hr)", value=st.session_state.live_update)
 st.session_state.live_update = toggle
 if st.session_state.live_update:
     st_autorefresh(interval=10000, key="aqi_autorefresh")
@@ -63,7 +63,7 @@ if "history" not in st.session_state:
 history = st.session_state.history
 new_aqi = clamp(history["AQI"].iloc[-1] + random.randint(-5,5))
 new_row = pd.DataFrame({"Time": [history["Time"].iloc[-1]+1], "AQI": [new_aqi]})
-st.session_state.history = pd.concat([history, new_row], ignore_index=True).tail(8)
+st.session_state.history = pd.concat([history, new_row], ignore_index=True).tail(5)
 
 # -----------------------------
 # Layout
@@ -107,7 +107,7 @@ with col1:
     st.write("")
     st.write("")
 
-    # Past 20 readings as colored boxes
+    # Past 8 readings as colored boxes
     st.markdown("### Last 8 AQI Readings")
     readings = st.session_state.history['AQI'].tolist()
     num_per_row = 4
@@ -179,18 +179,3 @@ with col2:
     fig_donut.update_traces(textinfo="none")
     st.plotly_chart(fig_donut, use_container_width=True, key=f"donut_chart_{new_aqi}")
 
-# -----------------------------
-# About / Info
-# -----------------------------
-st.markdown("---")
-st.markdown("""
-### ℹ️ About this Prototype
-This dashboard simulates a **Smart AQI Monitoring System**:
-
-- **Sensor** → MQ135 + ESP32  
-- **Communication** → 4G SIM / LoRaWAN (MQTT protocol)  
-- **Cloud** → AWS IoT Core + Lambda + DynamoDB  
-- **Visualization** → Web Dashboard (this prototype shows random AQI data for demonstration)
-
-⚠️ *Note: All AQI data here is randomly generated and for demonstration purposes only.*
-""")
