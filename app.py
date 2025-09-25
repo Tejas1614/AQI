@@ -110,7 +110,7 @@ with col1:
     # Past 8 readings as colored boxes
     st.markdown("### Last 8 AQI Readings")
     readings = st.session_state.history['AQI'].tolist()
-    num_per_row = 4
+    num_per_row = 5
 
     for i in range(0, len(readings), num_per_row):
         row = readings[i:i+num_per_row]
